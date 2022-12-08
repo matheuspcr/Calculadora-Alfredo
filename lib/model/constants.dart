@@ -113,14 +113,12 @@ class Constants {
   ];
 
   static var frequencia = <Unit>[
-    Unit("rpm", 60),
-    Unit("Hz", 1),
-    Unit("MHz", 0.000001)
+    Unit("rpm", 1),
+    Unit("Hz", 0.01666)
   ];
 
   static var potencia = <Unit>[
     Unit("watt", 1),
-    Unit("cavalo-vapor", 0.00135962),
     Unit("joule/s", 1)
   ];
 
