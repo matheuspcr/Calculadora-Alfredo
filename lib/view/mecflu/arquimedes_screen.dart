@@ -1,27 +1,26 @@
 import 'package:calculadora_base/model/calculos.dart';
 import 'package:calculadora_base/model/constants.dart';
 import 'package:flutter/material.dart';
-import '../model/measurement_unities.dart';
-import 'components/default_layout_components.dart';
+import '../../model/measurement_unities.dart';
+import '../components/default_layout_components.dart';
 
-class StevinScreen extends StatefulWidget {
-  const StevinScreen({super.key});
+class ArquimedesScreen extends StatefulWidget {
+  const ArquimedesScreen({super.key});
 
   @override
-  State<StevinScreen> createState() => _StevinScreenState();
+  State<ArquimedesScreen> createState() => _ArquimedesScreenState();
 }
 
-class _StevinScreenState extends State<StevinScreen> {
+class _ArquimedesScreenState extends State<ArquimedesScreen> {
   final TextEditingController _densidadeController = TextEditingController();
   final TextEditingController _gravidadeController = TextEditingController();
-  final TextEditingController _alturaController = TextEditingController();
-  final TextEditingController _variacaoPressaoController =
-      TextEditingController();
+  final TextEditingController _volumeController = TextEditingController();
+  final TextEditingController _moduloEmpuxoController = TextEditingController();
 
   Unit _densidadeDV = Constants.densidade.first;
   Unit _gravidadeDV = Constants.aceleracao.first;
-  Unit _alturaDV = Constants.distancia.first;
-  Unit _variacaoPressaoDV = Constants.pressao.first;
+  Unit _volumeDV = Constants.volume.first;
+  Unit _forcaDV = Constants.forca.first;
 
   @override
   Widget build(BuildContext context) {
@@ -52,40 +51,37 @@ class _StevinScreenState extends State<StevinScreen> {
                       })
                     }),
             getDefaultInputField(
-                _alturaController,
-                'Variação da altura da coluna de líquido(∆h):',
+                _volumeController,
+                'Volume(V):',
                 true,
-                Constants.distancia,
-                _alturaDV,
+                Constants.volume,
+                _volumeDV,
                 (value) => {
                       setState(() {
-                        _alturaDV = value!;
+                        _volumeDV = value!;
                       })
                     }),
             getDefaultInputField(
-                _variacaoPressaoController,
-                'Variação da pressão(∆P):',
-                false,
-                Constants.pressao,
-                _variacaoPressaoDV,
-                (value) => {
-                      setState(() {
-                        _variacaoPressaoDV = value!;
-                      })
-                    }),
+                _moduloEmpuxoController, 'Módulo do empuxo(E):', false, Constants.forca, _forcaDV,
+                    (value) => {
+                  setState(() {
+                    _forcaDV = value!;
+                  })
+                }
+            ),
             Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: ElevatedButton(
                     style: TextButton.styleFrom(backgroundColor: Colors.blue),
                     onPressed: () => {
-                          _variacaoPressaoController.text = Stevin(
+                          _moduloEmpuxoController.text = Arquimedes(
                             _densidadeController.text,
+                            _volumeController.text,
                             _gravidadeController.text,
-                            _alturaController.text,
                             _densidadeDV.multiple,
+                            _volumeDV.multiple,
                             _gravidadeDV.multiple,
-                            _alturaDV.multiple,
-                            _variacaoPressaoDV.multiple,
+                            _forcaDV.multiple
                           ).calcular().toString()
                         },
                     child: const Text('Calcular',

@@ -1,7 +1,7 @@
 import 'measurement_unities.dart';
 
 class Constants {
-  static var mainPageOptions = <Operacao>[
+  static var mecfluOptions = <Operacao>[
     Operacao(1, 'Massa Específica'),
     Operacao(2, 'Volume Específico'),
     Operacao(3, 'Peso Específico'),
@@ -9,12 +9,26 @@ class Constants {
     Operacao(5, 'Vazão'),
     Operacao(6, 'Pressão'),
     Operacao(7, 'Coeficiente de Reynolds'),
-    Operacao(8, 'Método de Moody-Rouse'),
+    // Operacao(8, 'Método de Moody-Rouse'),
     Operacao(9, 'Método de Hazen-Williams'),
     Operacao(10, 'Método de Darcy-Weisbach'),
     Operacao(11, 'Princípio de Stevin'),
     // Operacao(12, 'Princípio de Pascal'),
-    Operacao(13, 'Princípio de Arquimedes')
+    Operacao(13, 'Princípio de Arquimedes'),
+    Operacao(14, 'Potência necessária para acionamento da bomba')
+  ];
+
+  static var resmatOptions = <Operacao>[
+    Operacao(100, 'Tensão Tração/Compressão'),
+    Operacao(102, 'Tensão Cisalhamento'),
+    Operacao(103, 'Deformação de Cisalhamento'),
+    Operacao(104, 'Tensão Admissível'),
+    Operacao(105, 'Carga Axial'),
+    Operacao(106, 'Flexão Pura'),
+    Operacao(107, 'Lei de Hooke'),
+    Operacao(107, 'Módulo de Young'),
+    Operacao(107, 'Módulo de Elástivco'),
+
   ];
 
   static var distancia = <Unit>[
@@ -55,20 +69,15 @@ class Constants {
     Unit("kg/L", 0.001)
   ];
 
-  static var densidadeRey = <Unit>[
-    Unit("kg/m³", 1),
-    Unit("kg/L", 1000)
-  ];
-
   static var volumeEspec = <Unit>[
     Unit("m³/kg", 1),
     Unit("L/kg", 1000)
   ];
 
   static var pesoEspec = <Unit>[
-    Unit("Kg/m³", 1),
-    Unit("g/m³", 0.001),
-    Unit("Kg/L", 1000)
+    Unit("N/m³", 1),
+    Unit("N/cm³", 0.000001),
+    Unit("kN/m³", 1000)
   ];
 
   static var pressao = <Unit>[
@@ -101,6 +110,18 @@ class Constants {
   static var forca = <Unit>[
     Unit("N", 1),
     Unit("kgf", 9.80665)
+  ];
+
+  static var frequencia = <Unit>[
+    Unit("rpm", 60),
+    Unit("Hz", 1),
+    Unit("MHz", 0.000001)
+  ];
+
+  static var potencia = <Unit>[
+    Unit("watt", 1),
+    Unit("cavalo-vapor", 0.00135962),
+    Unit("joule/s", 1)
   ];
 
   static var viscosidade = <Unit>[

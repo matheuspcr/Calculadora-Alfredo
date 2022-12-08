@@ -1,24 +1,24 @@
 import 'package:calculadora_base/model/calculos.dart';
 import 'package:calculadora_base/model/constants.dart';
 import 'package:flutter/material.dart';
-import '../model/measurement_unities.dart';
-import 'components/default_layout_components.dart';
+import '../../model/measurement_unities.dart';
+import '../components/default_layout_components.dart';
 
-class VazaoScreen extends StatefulWidget {
-  const VazaoScreen({super.key});
+class VolumeEspecScreen extends StatefulWidget {
+  const VolumeEspecScreen({super.key});
 
   @override
-  State<VazaoScreen> createState() => _VazaoScreenState();
+  State<VolumeEspecScreen> createState() => _VolumeEspecScreenState();
 }
 
-class _VazaoScreenState extends State<VazaoScreen> {
+class _VolumeEspecScreenState extends State<VolumeEspecScreen> {
+  final TextEditingController _massaController = TextEditingController();
   final TextEditingController _volumeController = TextEditingController();
-  final TextEditingController _tempoController = TextEditingController();
-  final TextEditingController _vazaoController = TextEditingController();
+  final TextEditingController _volumeEspecController = TextEditingController();
 
+  Unit _massaDV = Constants.massa.first;
   Unit _volumeDV = Constants.volume.first;
-  Unit _tempoDV = Constants.tempo.first;
-  Unit _vazaoDV = Constants.vazao.first;
+  Unit _volumeEspecDV = Constants.volumeEspec.first;
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +27,19 @@ class _VazaoScreenState extends State<VazaoScreen> {
         child: Column(
           children: [
             getDefaultInputField(
+                _massaController,
+                'Massa(m):',
+                true,
+                Constants.massa,
+                _massaDV,
+                (value) => {
+                      setState(() {
+                        _massaDV = value!;
+                      })
+                    }),
+            getDefaultInputField(
                 _volumeController,
-                'Volume(v):',
+                'Volume(V):',
                 true,
                 Constants.volume,
                 _volumeDV,
@@ -38,25 +49,14 @@ class _VazaoScreenState extends State<VazaoScreen> {
                       })
                     }),
             getDefaultInputField(
-                _tempoController,
-                'Tempo(t):',
-                true,
-                Constants.tempo,
-                _tempoDV,
-                (value) => {
-                      setState(() {
-                        _tempoDV = value!;
-                      })
-                    }),
-            getDefaultInputField(
-                _vazaoController,
-                'Vazão(Q):',
+                _volumeEspecController,
+                'Volume específico(Ve):',
                 false,
-                Constants.vazao,
-                _vazaoDV,
+                Constants.volumeEspec,
+                _volumeEspecDV,
                 (value) => {
                       setState(() {
-                        _vazaoDV = value!;
+                        _volumeEspecDV = value!;
                       })
                     }),
             Padding(
@@ -64,12 +64,12 @@ class _VazaoScreenState extends State<VazaoScreen> {
                 child: ElevatedButton(
                     style: TextButton.styleFrom(backgroundColor: Colors.blue),
                     onPressed: () => {
-                          _vazaoController.text = Vazao(
+                          _volumeEspecController.text = VolumeEspecifico(
+                                  _massaController.text,
                                   _volumeController.text,
-                                  _tempoController.text,
+                                  _massaDV.multiple,
                                   _volumeDV.multiple,
-                                  _tempoDV.multiple,
-                                  _vazaoDV.multiple)
+                                  _volumeEspecDV.multiple)
                               .calcular()
                               .toString()
                         },

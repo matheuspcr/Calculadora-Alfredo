@@ -2,7 +2,7 @@ import 'package:calculadora_base/model/calculos.dart';
 import 'package:calculadora_base/model/constants.dart';
 import 'package:calculadora_base/model/measurement_unities.dart';
 import 'package:flutter/material.dart';
-import 'components/default_layout_components.dart';
+import '../components/default_layout_components.dart';
 
 class PressaoScreen extends StatefulWidget {
   const PressaoScreen({super.key});

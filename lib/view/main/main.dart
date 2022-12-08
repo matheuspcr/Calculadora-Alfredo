@@ -1,7 +1,6 @@
 import 'package:calculadora_base/model/constants.dart';
+import 'package:calculadora_base/view/list/list_screen.dart';
 import 'package:flutter/material.dart';
-
-import 'view/list/calculator_screen.dart';
 
 void main() {
   runApp(const MainApplication());
@@ -14,12 +13,12 @@ class MainApplication extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Calculadora MecFlu',
+      title: 'Calculadora',
       theme: ThemeData(
         primarySwatch: Colors.blue,
 
       ),
-      home: const HomePage(title: 'Home Page'),
+      home: const HomePage(title: 'Home'),
     );
   }
 }
@@ -34,6 +33,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final options = <Operacao>[Operacao(1, 'Mecânica dos fluídos'), Operacao(2, 'Resistência dos materiais')];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,11 +42,11 @@ class _HomePageState extends State<HomePage> {
       ),
       body: GridView.count(
         crossAxisCount: 2,
-        children: List.generate(Constants.mainPageOptions.length, (index) {
+        children: List.generate(options.length, (index) {
           return Center(
             child: Padding(
                 padding: const EdgeInsets.all(8),
-                child: getRow(Constants.mainPageOptions[index])),
+                child: getRow(options[index])),
           );
         }),
       ),
@@ -58,9 +58,11 @@ class _HomePageState extends State<HomePage> {
       child: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 5),
         child: Container(
-          decoration: const BoxDecoration(
-            shape: BoxShape.rectangle,
-            color: Colors.indigoAccent
+          decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(16.0),
+              border: Border.all(color: Colors.black54),
+              color: Colors.white70
           ),
           child: Center(
            child: Padding(padding: const EdgeInsets.all(10), child: Text(option.title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline5,)),
@@ -68,12 +70,12 @@ class _HomePageState extends State<HomePage> {
         )
       ),
       onTap: () {
-        navigateToDetail(option.id);
+        navigateToDetail(option);
       },
     );
   }
 
-  void navigateToDetail(int operationId) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => CalculatorScreen(operationId)));
+  void navigateToDetail(Operacao subject) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ListScreen(subject)));
   }
 }

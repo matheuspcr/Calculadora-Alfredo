@@ -1,24 +1,24 @@
 import 'package:calculadora_base/model/calculos.dart';
 import 'package:calculadora_base/model/constants.dart';
 import 'package:flutter/material.dart';
-import '../model/measurement_unities.dart';
-import 'components/default_layout_components.dart';
+import 'package:calculadora_base/model/measurement_unities.dart';
+import 'package:calculadora_base/view/components/default_layout_components.dart';
 
-class VolumeEspecScreen extends StatefulWidget {
-  const VolumeEspecScreen({super.key});
+class VazaoScreen extends StatefulWidget {
+  const VazaoScreen({super.key});
 
   @override
-  State<VolumeEspecScreen> createState() => _VolumeEspecScreenState();
+  State<VazaoScreen> createState() => _VazaoScreenState();
 }
 
-class _VolumeEspecScreenState extends State<VolumeEspecScreen> {
-  final TextEditingController _massaController = TextEditingController();
+class _VazaoScreenState extends State<VazaoScreen> {
   final TextEditingController _volumeController = TextEditingController();
-  final TextEditingController _volumeEspecController = TextEditingController();
+  final TextEditingController _tempoController = TextEditingController();
+  final TextEditingController _vazaoController = TextEditingController();
 
-  Unit _massaDV = Constants.massa.first;
   Unit _volumeDV = Constants.volume.first;
-  Unit _volumeEspecDV = Constants.volumeEspec.first;
+  Unit _tempoDV = Constants.tempo.first;
+  Unit _vazaoDV = Constants.vazao.first;
 
   @override
   Widget build(BuildContext context) {
@@ -27,19 +27,8 @@ class _VolumeEspecScreenState extends State<VolumeEspecScreen> {
         child: Column(
           children: [
             getDefaultInputField(
-                _massaController,
-                'Massa(m):',
-                true,
-                Constants.massa,
-                _massaDV,
-                (value) => {
-                      setState(() {
-                        _massaDV = value!;
-                      })
-                    }),
-            getDefaultInputField(
                 _volumeController,
-                'Volume(V):',
+                'Volume(v):',
                 true,
                 Constants.volume,
                 _volumeDV,
@@ -49,14 +38,25 @@ class _VolumeEspecScreenState extends State<VolumeEspecScreen> {
                       })
                     }),
             getDefaultInputField(
-                _volumeEspecController,
-                'Volume específico(Ve):',
-                false,
-                Constants.volumeEspec,
-                _volumeEspecDV,
+                _tempoController,
+                'Tempo(t):',
+                true,
+                Constants.tempo,
+                _tempoDV,
                 (value) => {
                       setState(() {
-                        _volumeEspecDV = value!;
+                        _tempoDV = value!;
+                      })
+                    }),
+            getDefaultInputField(
+                _vazaoController,
+                'Vazão(Q):',
+                false,
+                Constants.vazao,
+                _vazaoDV,
+                (value) => {
+                      setState(() {
+                        _vazaoDV = value!;
                       })
                     }),
             Padding(
@@ -64,12 +64,12 @@ class _VolumeEspecScreenState extends State<VolumeEspecScreen> {
                 child: ElevatedButton(
                     style: TextButton.styleFrom(backgroundColor: Colors.blue),
                     onPressed: () => {
-                          _volumeEspecController.text = VolumeEspecifico(
-                                  _massaController.text,
+                          _vazaoController.text = Vazao(
                                   _volumeController.text,
-                                  _massaDV.multiple,
+                                  _tempoController.text,
                                   _volumeDV.multiple,
-                                  _volumeEspecDV.multiple)
+                                  _tempoDV.multiple,
+                                  _vazaoDV.multiple)
                               .calcular()
                               .toString()
                         },

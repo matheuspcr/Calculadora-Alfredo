@@ -1,29 +1,31 @@
 import 'package:calculadora_base/model/calculos.dart';
 import 'package:calculadora_base/model/constants.dart';
 import 'package:flutter/material.dart';
-import '../model/measurement_unities.dart';
-import 'components/default_layout_components.dart';
 
-class HazenWilliamsScreen extends StatefulWidget {
-  const HazenWilliamsScreen({super.key});
+import '../../model/measurement_unities.dart';
+import '../components/default_layout_components.dart';
+
+class MoodyRouseScreen extends StatefulWidget {
+  const MoodyRouseScreen({super.key});
 
   @override
-  State<HazenWilliamsScreen> createState() => _HazenWilliamsScreenState();
+  State<MoodyRouseScreen> createState() => _MoodyRouseScreenState();
 }
 
-class _HazenWilliamsScreenState extends State<HazenWilliamsScreen> {
-  final TextEditingController _coefExperimentalController =
-      TextEditingController();
+class _MoodyRouseScreenState extends State<MoodyRouseScreen> {
+  final TextEditingController _coefAtritoController = TextEditingController();
   final TextEditingController _comprimentoTuboController =
       TextEditingController();
   final TextEditingController _diametroTuboController = TextEditingController();
-  final TextEditingController _vazaoController = TextEditingController();
+  final TextEditingController _velocidadeController = TextEditingController();
+  final TextEditingController _gravidadeController = TextEditingController();
   final TextEditingController _perdaCargaDistribuidaController =
       TextEditingController();
 
   Unit _comprimentoTuboDV = Constants.distancia.first;
   Unit _diametroTuboDV = Constants.distancia.first;
-  Unit _vazaoDV = Constants.vazao.first;
+  Unit _velocidadeDV = Constants.velocidade.first;
+  Unit _gravidadeDV = Constants.aceleracao.first;
   Unit _perdaCargaDistribuidaDV = Constants.distancia.first;
 
   @override
@@ -32,8 +34,8 @@ class _HazenWilliamsScreenState extends State<HazenWilliamsScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            getDefaultInputFieldWithoutDropdown(_coefExperimentalController,
-                'Coeficiente de Hazen Williams(C):', true),
+            getDefaultInputFieldWithoutDropdown(
+                _coefAtritoController, 'Coeficiente de atritio(f):', true),
             getDefaultInputField(
                 _comprimentoTuboController,
                 'Comprimento da tubulação(L):',
@@ -57,14 +59,25 @@ class _HazenWilliamsScreenState extends State<HazenWilliamsScreen> {
                       })
                     }),
             getDefaultInputField(
-                _vazaoController,
-                'Vazão(Q):',
+                _velocidadeController,
+                'Velocidade do fluido(v):',
                 true,
-                Constants.vazao,
-                _vazaoDV,
+                Constants.velocidade,
+                _velocidadeDV,
                 (value) => {
                       setState(() {
-                        _vazaoDV = value!;
+                        _velocidadeDV = value!;
+                      })
+                    }),
+            getDefaultInputField(
+                _gravidadeController,
+                'Aceleração da gravidade(g):',
+                true,
+                Constants.aceleracao,
+                _gravidadeDV,
+                (value) => {
+                      setState(() {
+                        _gravidadeDV = value!;
                       })
                     }),
             getDefaultInputField(
@@ -83,14 +96,16 @@ class _HazenWilliamsScreenState extends State<HazenWilliamsScreen> {
                 child: ElevatedButton(
                     style: TextButton.styleFrom(backgroundColor: Colors.blue),
                     onPressed: () => {
-                          _perdaCargaDistribuidaController.text = HazenWilliams(
-                            _coefExperimentalController.text,
+                          _perdaCargaDistribuidaController.text = MoodyRouse(
+                            _coefAtritoController.text,
                             _comprimentoTuboController.text,
                             _diametroTuboController.text,
-                            _vazaoController.text,
+                            _velocidadeController.text,
+                            _gravidadeController.text,
                             _comprimentoTuboDV.multiple,
                             _diametroTuboDV.multiple,
-                            _vazaoDV.multiple,
+                            _velocidadeDV.multiple,
+                            _gravidadeDV.multiple,
                             _perdaCargaDistribuidaDV.multiple,
                           ).calcular().toString()
                         },

@@ -4,6 +4,12 @@ abstract class OP {
   num calcular();
 }
 
+/**
+ *
+ * Mecflu
+ *
+ */
+
 class MassaEspecifica implements OP {
   final String massa;
   final String volume;
@@ -116,7 +122,7 @@ class Reynolds implements OP {
 
   @override
   num calcular() {
-    return ((num.parse(massaEspec) * unidadeMassaEspec) * (num.parse(velocidade) * unidadeVelocidade) * (num.parse(diametro)) * unidadeDiametroTubo) / (num.parse(coefViscosidade) * unidadeCoefViscosidade);
+    return ((num.parse(massaEspec) / unidadeMassaEspec) * (num.parse(velocidade) * unidadeVelocidade) * (num.parse(diametro)) * unidadeDiametroTubo) / (num.parse(coefViscosidade) * unidadeCoefViscosidade);
   }
 
   Reynolds(this.massaEspec, this.velocidade, this.diametro, this.coefViscosidade, this.unidadeMassaEspec, this.unidadeVelocidade, this.unidadeDiametroTubo, this.unidadeCoefViscosidade);
@@ -144,22 +150,22 @@ class MoodyRouse implements OP {
 }
 
 class HazenWilliams implements OP {
-  final String coefExperimental;
+  final String coefRugosidade;
   final String comprimentoTubo;
   final String diametroTubo;
-  final String vazao;
+  final String velocidade;
 
   final num unidadeComprimentoTubo;
   final num unidadeDiametroTubo;
-  final num unidadeVazao;
+  final num unidadeVelocidade;
   final num unidadePerdaDeCarga;
 
   @override
   num calcular() {
-    return ((num.parse(comprimentoTubo) * unidadeComprimentoTubo) * (10.641 / pow(num.parse(coefExperimental), 1.85)) * (pow((num.parse(vazao) * unidadeVazao), 1.85) / (pow((num.parse(diametroTubo) * unidadeDiametroTubo), 4.87)))) * unidadePerdaDeCarga;
+    return (((num.parse(comprimentoTubo) * unidadeComprimentoTubo * 6.78) * (pow((num.parse(velocidade) * unidadeVelocidade), 1.85))) / ((pow((num.parse(diametroTubo) * unidadeDiametroTubo), 1.165)) * (pow(num.parse(coefRugosidade), 1.85)))) / unidadePerdaDeCarga;
   }
 
-  HazenWilliams(this.coefExperimental, this.comprimentoTubo, this.diametroTubo, this.vazao, this.unidadeComprimentoTubo, this.unidadeDiametroTubo, this.unidadeVazao, this.unidadePerdaDeCarga);
+  HazenWilliams(this.coefRugosidade, this.comprimentoTubo, this.diametroTubo, this.velocidade, this.unidadeComprimentoTubo, this.unidadeDiametroTubo, this.unidadeVelocidade, this.unidadePerdaDeCarga);
 }
 
 class DarcyWeisbach implements OP {
@@ -177,7 +183,7 @@ class DarcyWeisbach implements OP {
 
   @override
   num calcular() {
-    return (num.parse(coefAtrito) * ((num.parse(comprimentoTubo) * unidadeComprimentoTubo) / (num.parse(diametroTubo) * unidadeDiametroTubo)) * (pow((num.parse(velocidade) * unidadeVelocidade), 2) / (2 * (num.parse(gravidade) * unidadeGravidade)))) * unidadePerdaDeCarga;
+    return ((4 * num.parse(coefAtrito) * (num.parse(comprimentoTubo) * unidadeComprimentoTubo) * (pow((num.parse(velocidade) * unidadeVelocidade), 2))) / ((num.parse(diametroTubo) * unidadeDiametroTubo) * (2 * (num.parse(gravidade) * unidadeGravidade)))) / unidadePerdaDeCarga;
   }
 
   DarcyWeisbach(this.coefAtrito, this.comprimentoTubo, this.diametroTubo, this.velocidade, this.gravidade, this.unidadeComprimentoTubo, this.unidadeDiametroTubo, this.unidadeVelocidade, this.unidadeGravidade, this.unidadePerdaDeCarga);
@@ -225,17 +231,87 @@ class Pascal implements OP {
 
 class Arquimedes implements OP {
   final String densidadeFluido;
-  final String volumeFluido;
+  final String velocidadeFluido;
   final String gravidade;
 
   final num unidadeDensidade;
-  final num unidadeVolume;
+  final num unidadeVelocidade;
   final num unidadeGravidade;
+  final num unidadeForca;
 
   @override
   num calcular() {
-    return (num.parse(densidadeFluido) * unidadeDensidade) * (num.parse(volumeFluido) * unidadeVolume ) * (num.parse(gravidade) * unidadeGravidade);
+    return ((num.parse(densidadeFluido) * unidadeDensidade) * (num.parse(velocidadeFluido) * unidadeVelocidade ) * (num.parse(gravidade) * unidadeGravidade)) / unidadeForca;
   }
 
-  Arquimedes(this.densidadeFluido, this.volumeFluido, this.gravidade, this.unidadeDensidade, this.unidadeVolume, this.unidadeGravidade);
+  Arquimedes(this.densidadeFluido, this.velocidadeFluido, this.gravidade, this.unidadeDensidade, this.unidadeVelocidade, this.unidadeGravidade, this.unidadeForca);
+}
+
+
+class PotenciaAcionamentoBomba implements OP {
+  final String pesoEspec;
+  final String areaPistao;
+  final String comprimentoCurso;
+  final String velocidade; //RPM
+  final String alturaCentroCilindro;
+  final String alturaElevacaoLiquido;
+
+  final num unidadePesoEspec;
+  final num unidadeAreaPistao;
+  final num unidadeComprimento;
+  final num unidadeVelocidade;
+  final num unidadeAlturaCentroCilindro;
+  final num unidadeAlturaElevacaoLiquido;
+  final num unidadePotencia;
+
+  @override
+  num calcular() {
+    return (((num.parse(pesoEspec) * unidadePesoEspec) * (num.parse(areaPistao) * unidadeAreaPistao) * (num.parse(comprimentoCurso) * unidadeComprimento) * (num.parse(velocidade) * unidadeVelocidade) * ((num.parse(alturaCentroCilindro) * unidadeAlturaCentroCilindro) + (num.parse(alturaElevacaoLiquido) * unidadeAlturaElevacaoLiquido))) / 60) * unidadePotencia;
+
+  }
+
+  PotenciaAcionamentoBomba(this.pesoEspec, this.areaPistao, this.comprimentoCurso, this.velocidade, this.alturaCentroCilindro, this.alturaElevacaoLiquido, this.unidadePesoEspec, this.unidadeAreaPistao, this.unidadeComprimento, this.unidadeVelocidade, this.unidadeAlturaCentroCilindro, this.unidadeAlturaElevacaoLiquido, this.unidadePotencia);
+}
+
+/**
+ *
+ * Resmat
+ *
+ */
+
+class TensaoTracao implements OP {
+  final String massa;
+  final String aceleracao;
+
+  final num unidadeMassa;
+  final num unidadeAceleracao;
+
+  @override
+  num calcular() {
+    return (num.parse(massa) * unidadeMassa) * (num.parse(aceleracao) * unidadeAceleracao);
+  }
+
+  TensaoTracao(this.massa, this.aceleracao, this.unidadeMassa, this.unidadeAceleracao);
+}
+
+
+class TensaoCisalhamento implements OP {
+  final String momentoEstatico;
+  final String forcaCisalhamentoInterna;
+  final String momentoInercia;
+  final String largura;
+
+  final num unidadeMomentoEstatico;
+  final num unidadeForcaCisalhamentoInterna;
+  final num unidadeMomentoInercia;
+  final num unidadeLargura;
+  final num unidadeTensao;
+
+  TensaoCisalhamento(this.momentoEstatico, this.forcaCisalhamentoInterna, this.momentoInercia, this.largura, this.unidadeMomentoEstatico, this.unidadeForcaCisalhamentoInterna, this.unidadeMomentoInercia, this.unidadeLargura, this.unidadeTensao);
+
+  @override
+  num calcular() {
+    return ((num.parse(forcaCisalhamentoInterna) * unidadeForcaCisalhamentoInterna) * (num.parse(momentoEstatico) * unidadeMomentoEstatico)) / ((num.parse(momentoInercia) * unidadeMomentoInercia) * (num.parse(largura) * unidadeLargura)) * unidadeTensao;
+  }
+
 }

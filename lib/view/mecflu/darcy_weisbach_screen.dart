@@ -1,17 +1,17 @@
 import 'package:calculadora_base/model/calculos.dart';
 import 'package:calculadora_base/model/constants.dart';
 import 'package:flutter/material.dart';
-import '../model/measurement_unities.dart';
-import 'components/default_layout_components.dart';
+import '../../model/measurement_unities.dart';
+import '../components/default_layout_components.dart';
 
-class MoodyRouseScreen extends StatefulWidget {
-  const MoodyRouseScreen({super.key});
+class DarcyWeisbachScreen extends StatefulWidget {
+  const DarcyWeisbachScreen({super.key});
 
   @override
-  State<MoodyRouseScreen> createState() => _MoodyRouseScreenState();
+  State<DarcyWeisbachScreen> createState() => _DarcyWeisbachScreenState();
 }
 
-class _MoodyRouseScreenState extends State<MoodyRouseScreen> {
+class _DarcyWeisbachScreenState extends State<DarcyWeisbachScreen> {
   final TextEditingController _coefAtritoController = TextEditingController();
   final TextEditingController _comprimentoTuboController =
       TextEditingController();
@@ -34,10 +34,10 @@ class _MoodyRouseScreenState extends State<MoodyRouseScreen> {
         child: Column(
           children: [
             getDefaultInputFieldWithoutDropdown(
-                _coefAtritoController, 'Coeficiente de atritio(f):', true),
+                _coefAtritoController, 'Coeficiente de Atrito(C):', true),
             getDefaultInputField(
                 _comprimentoTuboController,
-                'Comprimento da tubulação(L):',
+                'Comprimento do encanamento(L):',
                 true,
                 Constants.distancia,
                 _comprimentoTuboDV,
@@ -48,7 +48,7 @@ class _MoodyRouseScreenState extends State<MoodyRouseScreen> {
                     }),
             getDefaultInputField(
                 _diametroTuboController,
-                'Diametro da tubulação(D):',
+                'Diâmetro da canalização(D):',
                 true,
                 Constants.distancia,
                 _diametroTuboDV,
@@ -59,7 +59,7 @@ class _MoodyRouseScreenState extends State<MoodyRouseScreen> {
                     }),
             getDefaultInputField(
                 _velocidadeController,
-                'Velocidade do fluido(v):',
+                'Velocidade média do fluido(v):',
                 true,
                 Constants.velocidade,
                 _velocidadeDV,
@@ -95,7 +95,7 @@ class _MoodyRouseScreenState extends State<MoodyRouseScreen> {
                 child: ElevatedButton(
                     style: TextButton.styleFrom(backgroundColor: Colors.blue),
                     onPressed: () => {
-                          _perdaCargaDistribuidaController.text = MoodyRouse(
+                          _perdaCargaDistribuidaController.text = DarcyWeisbach(
                             _coefAtritoController.text,
                             _comprimentoTuboController.text,
                             _diametroTuboController.text,

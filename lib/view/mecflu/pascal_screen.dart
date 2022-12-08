@@ -1,8 +1,8 @@
 import 'package:calculadora_base/model/calculos.dart';
 import 'package:calculadora_base/model/constants.dart';
 import 'package:flutter/material.dart';
-import '../model/measurement_unities.dart';
-import 'components/default_layout_components.dart';
+import '../../model/measurement_unities.dart';
+import '../components/default_layout_components.dart';
 
 class PascalScreen extends StatefulWidget {
   const PascalScreen({super.key});

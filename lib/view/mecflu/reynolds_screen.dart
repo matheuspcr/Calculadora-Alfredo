@@ -1,8 +1,8 @@
 import 'package:calculadora_base/model/calculos.dart';
 import 'package:calculadora_base/model/constants.dart';
 import 'package:flutter/material.dart';
-import '../model/measurement_unities.dart';
-import 'components/default_layout_components.dart';
+import 'package:calculadora_base/model/measurement_unities.dart';
+import 'package:calculadora_base/view/components/default_layout_components.dart';
 
 class ReynoldsScreen extends StatefulWidget {
   const ReynoldsScreen({super.key});
@@ -20,7 +20,7 @@ class _ReynoldsScreenState extends State<ReynoldsScreen> {
       TextEditingController();
   final TextEditingController _coefReynoldsController = TextEditingController();
 
-  Unit _massaEspecificaDV = Constants.densidadeRey.first;
+  Unit _massaEspecificaDV = Constants.densidade.first;
   Unit _velocidadeDV = Constants.velocidade.first;
   Unit _diametroDV = Constants.distancia.first;
   Unit _coefViscosidadeDV = Constants.viscosidade.first;
@@ -35,7 +35,7 @@ class _ReynoldsScreenState extends State<ReynoldsScreen> {
                 _massaEspecificaController,
                 'Massa específica(ρ):',
                 true,
-                Constants.densidadeRey,
+                Constants.densidade,
                 _massaEspecificaDV,
                 (value) => {
                       setState(() {

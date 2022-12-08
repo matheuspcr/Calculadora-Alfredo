@@ -1,24 +1,26 @@
 import 'package:calculadora_base/model/calculos.dart';
-import 'package:calculadora_base/model/constants.dart';
 import 'package:flutter/material.dart';
-import '../model/measurement_unities.dart';
-import 'components/default_layout_components.dart';
+import '../../model/constants.dart';
+import '../../model/measurement_unities.dart';
+import '../components/default_layout_components.dart';
 
-class MassaEspecScreen extends StatefulWidget {
-  const MassaEspecScreen({super.key});
+class PesoEspecScreen extends StatefulWidget {
+  const PesoEspecScreen({super.key});
 
   @override
-  State<MassaEspecScreen> createState() => _MassaEspecScreenState();
+  State<PesoEspecScreen> createState() => _PesoEspecScreenState();
 }
 
-class _MassaEspecScreenState extends State<MassaEspecScreen> {
+class _PesoEspecScreenState extends State<PesoEspecScreen> {
   final TextEditingController _massaController = TextEditingController();
   final TextEditingController _volumeController = TextEditingController();
-  final TextEditingController _massaEspecController = TextEditingController();
+  final TextEditingController _gravidadeController = TextEditingController();
+  final TextEditingController _pesoEspecController = TextEditingController();
 
   Unit _massaDV = Constants.massa.first;
   Unit _volumeDV = Constants.volume.first;
-  Unit _massaEspecDV = Constants.densidade.first;
+  Unit _gravidadeDV = Constants.aceleracao.first;
+  Unit _pesoEspecDV = Constants.pesoEspec.first;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,17 @@ class _MassaEspecScreenState extends State<MassaEspecScreen> {
                       })
                     }),
             getDefaultInputField(
+                _gravidadeController,
+                'Gravidade(g):',
+                true,
+                Constants.aceleracao,
+                _gravidadeDV,
+                (value) => {
+                      setState(() {
+                        _gravidadeDV = value!;
+                      })
+                    }),
+            getDefaultInputField(
                 _volumeController,
                 'Volume(V):',
                 true,
@@ -49,14 +62,14 @@ class _MassaEspecScreenState extends State<MassaEspecScreen> {
                       })
                     }),
             getDefaultInputField(
-                _massaEspecController,
-                'Massa específica(ρ):',
+                _pesoEspecController,
+                'Peso específico(γ):',
                 false,
-                Constants.densidade,
-                _massaEspecDV,
+                Constants.pesoEspec,
+                _pesoEspecDV,
                 (value) => {
                       setState(() {
-                        _massaEspecDV = value!;
+                        _pesoEspecDV = value!;
                       })
                     }),
             Padding(
@@ -64,14 +77,15 @@ class _MassaEspecScreenState extends State<MassaEspecScreen> {
                 child: ElevatedButton(
                     style: TextButton.styleFrom(backgroundColor: Colors.blue),
                     onPressed: () => {
-                          _massaEspecController.text = MassaEspecifica(
-                                  _massaController.text,
-                                  _volumeController.text,
-                                  _massaDV.multiple,
-                                  _volumeDV.multiple,
-                                  _massaEspecDV.multiple)
-                              .calcular()
-                              .toString()
+                          _pesoEspecController.text = PesoEspecifico(
+                            _massaController.text,
+                            _volumeController.text,
+                            _gravidadeController.text,
+                            _massaDV.multiple,
+                            _gravidadeDV.multiple,
+                            _volumeDV.multiple,
+                            _pesoEspecDV.multiple,
+                          ).calcular().toString()
                         },
                     child: const Text('Calcular',
                         overflow: TextOverflow.ellipsis)))

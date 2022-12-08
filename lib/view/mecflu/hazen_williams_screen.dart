@@ -1,30 +1,29 @@
 import 'package:calculadora_base/model/calculos.dart';
 import 'package:calculadora_base/model/constants.dart';
 import 'package:flutter/material.dart';
-import '../model/measurement_unities.dart';
-import 'components/default_layout_components.dart';
+import '../../model/measurement_unities.dart';
+import '../components/default_layout_components.dart';
 
-class DarcyWeisbachScreen extends StatefulWidget {
-  const DarcyWeisbachScreen({super.key});
+class HazenWilliamsScreen extends StatefulWidget {
+  const HazenWilliamsScreen({super.key});
 
   @override
-  State<DarcyWeisbachScreen> createState() => _DarcyWeisbachScreenState();
+  State<HazenWilliamsScreen> createState() => _HazenWilliamsScreenState();
 }
 
-class _DarcyWeisbachScreenState extends State<DarcyWeisbachScreen> {
-  final TextEditingController _coefAtritoController = TextEditingController();
+class _HazenWilliamsScreenState extends State<HazenWilliamsScreen> {
+  final TextEditingController _coefRugosidadeController =
+      TextEditingController();
   final TextEditingController _comprimentoTuboController =
       TextEditingController();
   final TextEditingController _diametroTuboController = TextEditingController();
-  final TextEditingController _velocidadeController = TextEditingController();
-  final TextEditingController _gravidadeController = TextEditingController();
+  final TextEditingController _velocidadeMediaController = TextEditingController();
   final TextEditingController _perdaCargaDistribuidaController =
       TextEditingController();
 
   Unit _comprimentoTuboDV = Constants.distancia.first;
   Unit _diametroTuboDV = Constants.distancia.first;
-  Unit _velocidadeDV = Constants.velocidade.first;
-  Unit _gravidadeDV = Constants.aceleracao.first;
+  Unit _velocidadeMediaDV = Constants.velocidade.first;
   Unit _perdaCargaDistribuidaDV = Constants.distancia.first;
 
   @override
@@ -33,11 +32,11 @@ class _DarcyWeisbachScreenState extends State<DarcyWeisbachScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            getDefaultInputFieldWithoutDropdown(
-                _coefAtritoController, 'Coeficiente de Atrito(C):', true),
+            getDefaultInputFieldWithoutDropdown(_coefRugosidadeController,
+                'Coeficiente de rugosidade do tubo(C):', true),
             getDefaultInputField(
                 _comprimentoTuboController,
-                'Comprimento do encanamento(L):',
+                'Comprimento da tubulação(L):',
                 true,
                 Constants.distancia,
                 _comprimentoTuboDV,
@@ -48,7 +47,7 @@ class _DarcyWeisbachScreenState extends State<DarcyWeisbachScreen> {
                     }),
             getDefaultInputField(
                 _diametroTuboController,
-                'Diâmetro da canalização(D):',
+                'Diametro da tubulação(D):',
                 true,
                 Constants.distancia,
                 _diametroTuboDV,
@@ -58,30 +57,19 @@ class _DarcyWeisbachScreenState extends State<DarcyWeisbachScreen> {
                       })
                     }),
             getDefaultInputField(
-                _velocidadeController,
-                'Velocidade média do fluido(v):',
+                _velocidadeMediaController,
+                'Velocidade média(V):',
                 true,
                 Constants.velocidade,
-                _velocidadeDV,
+                _velocidadeMediaDV,
                 (value) => {
                       setState(() {
-                        _velocidadeDV = value!;
-                      })
-                    }),
-            getDefaultInputField(
-                _gravidadeController,
-                'Aceleração da gravidade(g):',
-                true,
-                Constants.aceleracao,
-                _gravidadeDV,
-                (value) => {
-                      setState(() {
-                        _gravidadeDV = value!;
+                        _velocidadeMediaDV = value!;
                       })
                     }),
             getDefaultInputField(
                 _perdaCargaDistribuidaController,
-                'Perda de carga distribuída(Hp):',
+                'Perda de carga(Hf):',
                 false,
                 Constants.distancia,
                 _perdaCargaDistribuidaDV,
@@ -95,16 +83,14 @@ class _DarcyWeisbachScreenState extends State<DarcyWeisbachScreen> {
                 child: ElevatedButton(
                     style: TextButton.styleFrom(backgroundColor: Colors.blue),
                     onPressed: () => {
-                          _perdaCargaDistribuidaController.text = DarcyWeisbach(
-                            _coefAtritoController.text,
+                          _perdaCargaDistribuidaController.text = HazenWilliams(
+                            _coefRugosidadeController.text,
                             _comprimentoTuboController.text,
                             _diametroTuboController.text,
-                            _velocidadeController.text,
-                            _gravidadeController.text,
+                            _velocidadeMediaController.text,
                             _comprimentoTuboDV.multiple,
                             _diametroTuboDV.multiple,
-                            _velocidadeDV.multiple,
-                            _gravidadeDV.multiple,
+                            _velocidadeMediaDV.multiple,
                             _perdaCargaDistribuidaDV.multiple,
                           ).calcular().toString()
                         },

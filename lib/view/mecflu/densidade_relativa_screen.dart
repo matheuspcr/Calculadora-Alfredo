@@ -1,8 +1,8 @@
 import 'package:calculadora_base/model/calculos.dart';
 import 'package:calculadora_base/model/constants.dart';
+import 'package:calculadora_base/model/measurement_unities.dart';
+import 'package:calculadora_base/view/components/default_layout_components.dart';
 import 'package:flutter/material.dart';
-import '../model/measurement_unities.dart';
-import 'components/default_layout_components.dart';
 
 class DensidadeRelativaScreen extends StatefulWidget {
   const DensidadeRelativaScreen({super.key});
