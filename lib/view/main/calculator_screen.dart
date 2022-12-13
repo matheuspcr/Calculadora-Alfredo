@@ -13,6 +13,13 @@ import 'package:calculadora_base/view/mecflu/reynolds_screen.dart';
 import 'package:calculadora_base/view/mecflu/stevin_screen.dart';
 import 'package:calculadora_base/view/mecflu/vazao_screen.dart';
 import 'package:calculadora_base/view/mecflu/volume_espec_screen.dart';
+import 'package:calculadora_base/view/resmat/deformacao_cisalhamento_screen.dart';
+import 'package:calculadora_base/view/resmat/deformacao_tracao_compressao_screen.dart';
+import 'package:calculadora_base/view/resmat/hooke_screen.dart';
+import 'package:calculadora_base/view/resmat/modulo_cisalhamento_screen.dart';
+import 'package:calculadora_base/view/resmat/modulo_elasticidade_screen.dart';
+import 'package:calculadora_base/view/resmat/tensao_cisalhamento_screen.dart';
+import 'package:calculadora_base/view/resmat/tensao_tracao_compressao_screen.dart';
 import 'package:flutter/material.dart';
 
 class CalculatorScreen extends StatefulWidget {
@@ -33,9 +40,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final operation = getOptions()
-        .where((element) => element.id == operationId)
-        .first;
+    final operation =
+        getOptions().where((element) => element.id == operationId).first;
 
     return Scaffold(
         appBar: AppBar(title: Text(operation.title)),
@@ -74,6 +80,20 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         return const ArquimedesScreen();
       case 14:
         return const PotenciaAcionamentoBombaScreen();
+      case 100:
+        return const TensaoTracaoCompressaoScreen();
+      case 101:
+        return const TensaoCisalhamentoScreen();
+      case 102:
+        return const DeformacaoTracaoCompressaoScreen();
+      case 103:
+        return const DeformacaoCisalhamentoScreen();
+      case 104:
+        return const ModuloElasticidadeScreen();
+      case 105:
+        return const ModuloCisalhamentoScreen();
+      case 107:
+        return const HookeScreen();
       default:
         return const Center(
           child: Text('Não implemementado!'),

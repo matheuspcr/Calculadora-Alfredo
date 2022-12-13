@@ -20,14 +20,12 @@ class Constants {
 
   static var resmatOptions = <Operacao>[
     Operacao(100, 'Tensão Tração/Compressão'),
-    Operacao(102, 'Tensão Cisalhamento'),
+    Operacao(101, 'Tensão Cisalhamento'),
+    Operacao(102, 'Deformação Tração/Compressão'),
     Operacao(103, 'Deformação de Cisalhamento'),
-    Operacao(104, 'Tensão Admissível'),
-    Operacao(105, 'Carga Axial'),
-    Operacao(106, 'Flexão Pura'),
+    Operacao(104, 'Módulo de Elasticidade Tração/Compressão'),
+    Operacao(105, 'Módulo de Cisalhamento'),
     Operacao(107, 'Lei de Hooke'),
-    Operacao(107, 'Módulo de Young'),
-    Operacao(107, 'Módulo de Elástivco'),
 
   ];
 

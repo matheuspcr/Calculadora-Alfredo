@@ -279,39 +279,117 @@ class PotenciaAcionamentoBomba implements OP {
  *
  */
 
-class TensaoTracao implements OP {
-  final String massa;
-  final String aceleracao;
 
-  final num unidadeMassa;
-  final num unidadeAceleracao;
+class TensaoTracaoCompressao implements OP {
+  final String forca;
+  final String area;
+
+  final num unidadeForca;
+  final num unidadeArea;
+  final num unidadePressao;
 
   @override
   num calcular() {
-    return (num.parse(massa) * unidadeMassa) * (num.parse(aceleracao) * unidadeAceleracao);
+    return ((num.parse(forca) * unidadeForca) / (num.parse(area) * unidadeArea)) * unidadePressao;
+    
   }
 
-  TensaoTracao(this.massa, this.aceleracao, this.unidadeMassa, this.unidadeAceleracao);
+  TensaoTracaoCompressao(this.forca, this.area, this.unidadeForca, this.unidadeArea, this.unidadePressao);
 }
 
 
 class TensaoCisalhamento implements OP {
-  final String momentoEstatico;
-  final String forcaCisalhamentoInterna;
-  final String momentoInercia;
-  final String largura;
+  final String forca;
+  final String area;
 
-  final num unidadeMomentoEstatico;
-  final num unidadeForcaCisalhamentoInterna;
-  final num unidadeMomentoInercia;
-  final num unidadeLargura;
-  final num unidadeTensao;
-
-  TensaoCisalhamento(this.momentoEstatico, this.forcaCisalhamentoInterna, this.momentoInercia, this.largura, this.unidadeMomentoEstatico, this.unidadeForcaCisalhamentoInterna, this.unidadeMomentoInercia, this.unidadeLargura, this.unidadeTensao);
+  final num unidadeForca;
+  final num unidadeArea;
+  final num unidadePressao;
 
   @override
   num calcular() {
-    return ((num.parse(forcaCisalhamentoInterna) * unidadeForcaCisalhamentoInterna) * (num.parse(momentoEstatico) * unidadeMomentoEstatico)) / ((num.parse(momentoInercia) * unidadeMomentoInercia) * (num.parse(largura) * unidadeLargura)) * unidadeTensao;
+    return ((num.parse(forca) * unidadeForca) / (num.parse(area) * unidadeArea)) * unidadePressao;
+  }
+
+  TensaoCisalhamento(this.forca, this.area, this.unidadeForca, this.unidadeArea, this.unidadePressao);
+}
+
+
+class DeformacaoTracaoCompressao implements OP {
+  final String variacaoLargura;
+  final String larguraInicial;
+
+  final num unidadeVariacaoLargura;
+  final num unidadeLarguraInicial;
+
+  @override
+  num calcular() {
+    return (num.parse(variacaoLargura) * unidadeVariacaoLargura) / (num.parse(larguraInicial) * unidadeLarguraInicial);
+  }
+
+  DeformacaoTracaoCompressao(this.variacaoLargura, this.larguraInicial, this.unidadeVariacaoLargura, this.unidadeLarguraInicial);
+
+}
+
+
+class DeformacaoCisalhamento implements OP {
+  final String teta;
+
+  DeformacaoCisalhamento(this.teta);
+
+  @override
+  num calcular() {
+    return tan(num.parse(teta));
+  }
+}
+
+
+class ModuloElasticidade implements OP {
+  final String tensao;
+  final String deformacao;
+
+  final num unidadeTensao;
+  final num unidadeModuloElas;
+
+  @override
+  num calcular() {
+    return ((num.parse(tensao) * unidadeTensao) / (num.parse(deformacao)) * unidadeModuloElas);
+  }
+
+  ModuloElasticidade(this.tensao, this.deformacao, this.unidadeTensao, this.unidadeModuloElas);
+}
+
+
+class ModuloCisalhamento implements OP {
+  final String tensao;
+  final String deformacao;
+
+  final num unidadeTensao;
+  final num unidadeModulo;
+
+  @override
+  num calcular() {
+    return (num.parse(tensao) * unidadeTensao) / (num.parse(deformacao)) * unidadeModulo;
+  }
+
+  ModuloCisalhamento(this.tensao, this.deformacao, this.unidadeTensao, this.unidadeModulo);
+}
+
+
+class Hooke implements OP {
+  final String constanteElastica;
+  final String deformacaoMola;
+
+  final num unidadeConstanteElastica;
+  final num unidadeDeformacao;
+  final num unidadeForcaElastica;
+
+  Hooke(this.constanteElastica, this.deformacaoMola, this.unidadeConstanteElastica, this.unidadeDeformacao, this.unidadeForcaElastica);
+
+
+  @override
+  num calcular() {
+    return ((num.parse(constanteElastica) * unidadeConstanteElastica) * (num.parse(deformacaoMola) * unidadeDeformacao)) / unidadeForcaElastica;
   }
 
 }
